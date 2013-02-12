@@ -1,0 +1,19 @@
+﻿@using Molimentum.Models
+@model PagedResult<Album>
+
+@{
+    ViewBag.Title = "Fotos";
+    ViewBag.Section = "Photos";
+}
+
+@foreach (var albumSummary in Model.Items)
+{
+    <div class="eight columns">
+        <div class="entry">
+            @{Html.RenderPartial("AlbumSummary", albumSummary);}
+        </div>
+    </div>
+}
+<div class="sixteen columns">
+@{Html.RenderPartial("Pager", Model.Pager);}
+</div>

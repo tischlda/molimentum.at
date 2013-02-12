@@ -1,0 +1,19 @@
+﻿@using Molimentum.ViewModels
+@model CategoryDetailViewModel
+
+@{
+    ViewBag.Title = "Blog / Kategorie: " + Model.Category.Title;
+}
+
+    <div class="twelve columns alpha">
+        <div class="entry category">
+            <header class="entryHeader">Kategorie: @Model.Category.Title</header>
+        @if (!String.IsNullOrEmpty(Model.Category.Body))
+        {
+            <section class="content">
+            @Html.Raw(Model.Category.Body)
+            </section>
+        }
+        </div>
+    </div>
+@{Html.RenderPartial("PostList", Model.Posts);}

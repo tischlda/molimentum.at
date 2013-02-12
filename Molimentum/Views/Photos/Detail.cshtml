@@ -1,0 +1,110 @@
+﻿@using Molimentum
+@using Molimentum.Models
+@model Album
+
+@{
+    ViewBag.Title = "Fotos: " + Model.Title;
+    ViewBag.Section = "Photos";
+}
+
+<div class="sixteen columns">
+    <article class="entry album">
+        <header><h1>@Model.Title</h1></header>
+        <section class="content">
+            <p>@Model.Body</p>
+        </section>
+        <footer>
+            @{var first = true;}
+
+            @if (Model.DateFrom != null && Model.DateTo != null)
+            {
+                if (first) { first = false; } else {<text> | </text>}
+                <text>@Model.DateFrom.Value.Date.ToShortDateString() - @Model.DateTo.Value.Date.ToShortDateString()</text>
+            }
+
+            @if (first) { first = false; }
+            else
+            {<text> | </text>}
+
+            <a href="#comments">Kommentare:</a> @Model.Comments.Count()
+        </footer>
+    </article>
+</div>
+
+<section class="gallery">
+    @foreach (var picture in Model.Pictures)
+    {
+        var thumbnailMaxWidth = 280;
+        var thumbnailMaxHeight = (int)((double)thumbnailMaxWidth / 16.0 * 9.0);
+
+        var imageMaxWidth = 1024;
+        var imageMaxHeight = 800;
+
+        var thumbnail = picture.Links.Fit(thumbnailMaxWidth, thumbnailMaxHeight);
+        var image = picture.Links.FittingOrSmallest(imageMaxWidth, imageMaxHeight); 
+        
+        if (thumbnail != null && image != null)
+        {
+            var thumbnailWidth = thumbnail.Width;
+            var thumbnailHeight = thumbnail.Height;
+
+            if (thumbnailHeight > thumbnailMaxHeight)
+            {
+                thumbnailWidth = thumbnailWidth * thumbnailMaxHeight / thumbnailHeight;
+                thumbnailHeight = thumbnailMaxHeight;
+            }
+
+            <div class="one-third column">
+                <div class="entry">
+                    <section class="content thumbnail">
+                        <a href="@image.Url" title="@picture.Body">
+                            <img src="@thumbnail.Url" width="@thumbnailWidth" alt="@picture.Body" title="@picture.Body" />
+                        </a>
+                        <span class="imageTitle">@picture.Body</span>
+                    </section>
+                    <footer>
+                        @picture.DateTime.DateTime.ToString()
+                    </footer>
+                </div>
+            </div>
+        }
+    }
+</section>
+
+<section class="sixteen columns">
+    <header class="commentsHeader"><h1><a id="comments"></a>Kommentare [@Html.ActionLink("+", "AddComment", "Guestbook",  new { ParentId = Model.Id }, new { id = "addCommentLink" })]</h1></header>
+
+    <div id="addCommentForm"></div>
+
+    @if (!Model.Comments.Any())
+    {
+        <p>Noch keine Kommentare.</p>
+    }
+    else
+    {
+        foreach (var comment in Model.Comments)
+        {
+            Html.RenderPartial("Comment", comment);
+        }
+    }
+</section>
+
+@{Html.AddClientScript(Html.Partial("../Guestbook/AddCommentScript"));}
+
+@section Scripts
+{
+    <script type="text/javascript">
+        $(function () {
+            $(".gallery a").attr("data-fancybox-group", "gallery");
+            $(".gallery a").fancybox({
+                nextEffect: "fade",
+                prevEffect: "fade",
+                helpers: {
+                    buttons: {
+                        position : 'bottom'
+                    }
+                }
+            });
+        });
+    </script>
+}

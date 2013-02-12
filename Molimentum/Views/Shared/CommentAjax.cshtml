@@ -1,0 +1,14 @@
+﻿@using Molimentum.Models
+@model Comment
+
+@{
+    Layout = null;
+}
+
+@{Html.RenderPartial("Comment", Model);}
+<script type="text/javascript">
+    $("#addCommentForm").fadeTo(0, 0.0, function () {
+        $(this).fadeTo(300, 1.0);
+        $(this).attr("id", null).before("<div id='addCommentForm'></div>");
+    });
+</script>

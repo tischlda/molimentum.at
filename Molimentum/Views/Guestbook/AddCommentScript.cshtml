@@ -1,0 +1,12 @@
+﻿<script type="text/javascript">
+  $(function () {
+    $("#addCommentLink").click(function (e) {
+      e.preventDefault();
+      $("#addCommentForm").fadeTo(0, 0.0, function () {
+        $("#addCommentForm").load($("#addCommentLink").attr("href"), function () {
+          $(this).fadeTo(300, 1.0);
+        });
+      });
+    });
+  });
+</script>

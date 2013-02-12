@@ -1,0 +1,31 @@
+﻿@{
+    ViewBag.Title = "Reise";
+    ViewBag.Section = "PositionReports";
+}
+<div class="sixteen columns">
+    <article class="map entry">
+        <section class="content">
+            <div class="travelMap" id="travelMap" style="width: 100%; height: 500px; background-color: Black"></div>
+        </section>
+    </article>
+</div>
+
+@section Scripts
+{
+    <script type="text/javascript">
+        $(function () {
+            var map = new google.maps.Map($("#travelMap").get(0), {
+                mapTypeId: google.maps.MapTypeId.SATELLITE,
+                mapTypeControl: true,
+                streetViewControl: false,
+                zoomControl: true
+            });
+
+            $.molimentum.loadPositions(map, {
+                page: 1,
+                maxPages: 50,
+                pageSize: 100
+            });
+        });
+    </script>
+}

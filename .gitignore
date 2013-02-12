@@ -1,0 +1,12 @@
+obj
+bin
+*.cache
+*.suo
+*.user
+Index.dat
+Storage.dat
+Web.config
+App.config
+*.Debug.Config
+*.Release.Config
+packages/

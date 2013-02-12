@@ -1,0 +1,27 @@
+﻿@using Molimentum
+
+@{
+    ViewBag.Section = "Home";
+}
+
+<div class="block sixteen columns">
+    <div class="sixteen columns alpha">
+        <header class="pageHeader"><h1>MOLIMENTUM</h1><p>lat.: Bemühung, große Anstrengung</p></header>
+    </div>
+</div>
+
+<div class="block sixteen columns">
+    <div class="sixteen columns alpha">@{Html.RenderAction("LatestPost", "Widgets");}</div>
+
+    <div class="eight columns alpha">@{Html.RenderAction("LatestPositionReports", "Widgets");}</div>
+
+    <div class="eight columns omega">@{Html.RenderAction("LatestAlbum", "Widgets");}</div>
+</div>
+
+<div class="block sixteen columns">
+    <div class="eight columns alpha">@{Html.RenderAction("LatestComments", "Widgets");}</div>
+
+    <div class="five columns">@{Html.RenderAction("TagCloud", "Widgets");}</div>
+
+    <div class="three columns omega">@{Html.RenderAction("Categories", "Widgets");}</div>
+</div>

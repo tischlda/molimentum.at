@@ -1,0 +1,18 @@
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = ViewBag.Title;
+    ViewBag.Section = "Blog";
+}
+
+<div class="twelve columns">
+@RenderBody()
+</div>
+<div id="sidebar" class="four columns omega">
+    @{Html.RenderAction("Categories", "Widgets");}
+    @{Html.RenderAction("TagCloud", "Widgets");}
+</div>
+
+@section Scripts
+{
+    @RenderSection("Scripts", required: false)
+}

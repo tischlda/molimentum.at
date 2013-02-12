@@ -1,0 +1,13 @@
+﻿@using Molimentum.Models
+@model Album
+<div class="entry">
+    <header class="entryHeader">Neuste Fotos <span class="moreLink">@Html.ActionLink("[mehr »]", "Index", "Photos")</span></header>
+    @if (Model != null)
+    {
+        Html.RenderPartial("../Photos/AlbumSummary", Model);
+    }
+    else
+    {
+    <p>Noch keine Fotos.</p>
+    }
+</div>

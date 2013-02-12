@@ -1,0 +1,117 @@
+﻿@using Molimentum.Models
+@model Post
+
+@{
+    ViewBag.Title = @Model.Title;
+}
+
+<div class="twelve columns alpha">
+    <article class="entry post">
+        <header>
+            <h1>@Model.Title</h1>
+            @if (Model.DateFrom != null && Model.DateTo != null)
+            {
+                <div class="timespan"><text>@Model.DateFrom.Value.Date.ToShortDateString() - @Model.DateTo.Value.Date.ToShortDateString()</text></div>
+            }
+        </header>
+        <section class="content">
+        @if (Model.DateFrom != null && Model.DateTo != null)
+        {
+            <div class="travelMap" id="travelMap" style="width: 100%; height: 500px; background-color: Black"></div>
+        }
+        @Html.Raw(Model.Body)
+        </section>
+        <footer>
+            @{var first = true;}
+
+            @if (Model.DateTime != null)
+            {
+                if (first) { first = false; } else {<text> | </text>}
+                <text>@Model.DateTime.DateTime</text>
+            }
+
+            @if(Model.Category != null)
+            {
+                if (first) { first = false; } else {<text> | </text>}
+                <text>Kategorie:</text>
+                @Html.ActionLink(Model.Category.Title, "CategoryDetail", "Blog", new { Slug = Model.Category.Slug }, null)
+            }
+    
+            @if (Model.Tags != null && Model.Tags.Any())
+            {
+                if (first) { first = false; } else {<text> | </text>}
+                <text>Tags:</text>
+                var firstTag = true;
+                foreach (var tag in Model.Tags)
+                {
+                    if (firstTag) { firstTag = false; } else {<text>, </text>}
+                    @Html.ActionLink(tag, "TagIndex", "Blog", new { Tag = tag }, null)
+                }
+            }
+    
+            @if (first) { first = false; } else {<text> | </text>}
+
+            <a href="#comments">Kommentare:</a> @Model.Comments.Count()
+        </footer>
+    </article>
+</div>
+
+<div class="twelve columns alpha">
+    <section class="comments">
+        <header class="commentsHeader"><h1><a id="comments"></a>Kommentare [@Html.ActionLink("+", "AddComment", "Guestbook", new { ParentId = Model.Id }, new { id = "addCommentLink" })]</h1></header>
+        
+        <div id="addCommentForm"></div>
+
+        @if (!Model.Comments.Any())
+        {
+            <p>Noch keine Kommentare.</p>
+        }
+        else
+        {
+            foreach (var comment in Model.Comments)
+            {
+                Html.RenderPartial("Comment", comment);
+            }
+        }
+    </section>
+</div>
+
+@{Html.AddClientScript(Html.Partial("../Guestbook/AddCommentScript"));}
+
+@section Scripts
+{
+    <script type="text/javascript">
+        $(function () {
+            $("a[rel='lightbox']").attr("data-fancybox-group", "gallery");
+            $("a[rel='lightbox']").fancybox({
+                nextEffect: "fade",
+                prevEffect: "fade",
+                helpers: {
+                    buttons: {
+                        position: 'bottom'
+                    }
+                }
+            });
+        });
+    </script>
+
+    @if (Model.DateFrom != null && Model.DateTo != null)
+    {
+    <script type="text/javascript">
+        $(function () {
+            var map = new google.maps.Map($("#travelMap").get(0), {
+                mapTypeId: google.maps.MapTypeId.SATELLITE,
+                mapTypeControl: true,
+                streetViewControl: false,
+                zoomControl: true
+            });
+
+            $.molimentum.loadPositions(map, {
+                page: 1,
+                maxPages: 50,
+                from: "@Model.DateFrom.Value.UtcDateTime.ToString("o")",
+                to: "@Model.DateTo.Value.UtcDateTime.ToString("o")"
+            });
+        });
+    </script>}
+}

@@ -1,0 +1,26 @@
+﻿@using Molimentum
+@model Molimentum.Models.Post
+<footer>
+    @{var first = true;}
+
+    @if(Model.Category != null)
+    {
+        if (first) { first = false; } else {<text> | </text>}
+        <text>Kategorie:</text>
+        @Html.ActionLink(Model.Category.Title, "CategoryDetail", "Blog", new { Slug = Model.Category.Slug }, null)
+    }
+    
+    @if (Model.Tags != null && Model.Tags.Any())
+    {
+        if (first) { first = false; } else {<text> | </text>}
+        <text>Tags:</text>
+        var firstTag = true;
+        foreach (var tag in Model.Tags)
+        {
+            if (firstTag) { firstTag = false; } else {<text>, </text>}
+            @Html.ActionLink(tag, "TagIndex", "Blog", new { Tag = tag }, null)
+        }
+    }
+    
+    @if (first) { first = false; } else {<text> | </text>}
+</footer>

@@ -1,0 +1,15 @@
+﻿@using Molimentum.Models
+@model PagedResult<Post>
+
+@foreach (var postSummary in Model.Items)
+{
+    <div class="twelve columns alpha">
+        <div class="entry">
+            @{Html.RenderPartial("PostSummary", postSummary);}
+        </div>
+    </div>
+}
+
+<div class="twelve columns alpha">
+    @{Html.RenderPartial("Pager", Model.Pager);}
+</div>

@@ -1,0 +1,13 @@
+﻿@using Molimentum.Models
+@model Post
+<div class="entry">
+    <header class="entryHeader">Neuester Blogeintrag <span class="moreLink">@Html.ActionLink("[mehr »]", "Index", "Blog")</span></header>
+    @if (Model != null)
+    {
+        Html.RenderPartial("../Blog/PostSummary", Model);
+    }
+    else
+    {
+    <p>Noch kein Eintrag.</p>
+    }
+</div>

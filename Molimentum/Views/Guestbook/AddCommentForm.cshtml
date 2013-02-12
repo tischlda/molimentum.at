@@ -1,0 +1,44 @@
+﻿@using Molimentum.ViewModels
+@using PoliteCaptcha
+@model CommentWithParentId
+
+@using (Ajax.BeginForm(new AjaxOptions { UpdateTargetId = "addCommentForm", InsertionMode = InsertionMode.Replace }))
+{
+    <h1>Neuer Kommentar</h1>
+
+    @Html.LabelFor(model => model.Item.Author, "Name:")
+    @Html.EditorFor(model => model.Item.Author)
+    @Html.ValidationMessageFor(model => model.Item.Author)
+
+    <div class="fielddescription">Wird veröffentlicht.</div>
+
+    @Html.LabelFor(model => model.Item.Email, "E-Mail:")
+    @Html.EditorFor(model => model.Item.Email)
+    @Html.ValidationMessageFor(model => model.Item.Email)
+
+    <div class="fielddescription">Wird nicht veröffentlicht, <a href="http://www.gravatar.com/">Gravatar</a>-Icon wird angezeigt.</div>
+
+    @Html.LabelFor(model => model.Item.Website, "Website:")
+    @Html.EditorFor(model => model.Item.Website)
+    @Html.ValidationMessageFor(model => model.Item.Website)
+
+    <div class="fielddescription">Optional, wird veröffentlicht.</div>
+
+    <br />
+
+    @Html.LabelFor(model => model.Item.Title, "Betreff:")
+    @Html.EditorFor(model => model.Item.Title)
+    @Html.ValidationMessageFor(model => model.Item.Title)
+
+    <br />
+
+    @Html.TextAreaFor(model => model.Item.Body, 10, 80, null)
+    @Html.ValidationMessageFor(model => model.Item.Body)
+    
+    @Html.SpamPreventionFields()
+    
+    <footer>
+        <input type="submit" value="Senden" data-app-disable-on-submit="true" />
+    </footer>
+    @Html.HiddenFor(m => m.ParentId)
+}

@@ -1,0 +1,11 @@
+﻿@using Molimentum.ViewModels
+@model TagIndexViewModel
+
+@{
+    ViewBag.Title = "Blog / Tag: " + Model.Tag;
+}
+
+    <div class="twelve columns alpha">
+        <div class="entry category"><header class="entryHeader">Tag: @Model.Tag</header></div>
+    </div>
+@{Html.RenderPartial("PostList", Model.Posts);}

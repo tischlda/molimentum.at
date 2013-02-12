@@ -1,0 +1,15 @@
+﻿@using Molimentum.ViewModels
+@model CommentWithParentId
+
+@{
+    ViewBag.Title = "Kommentar hinzufügen";
+    ViewBag.Section = "Guestbook";
+}
+
+<div class="twelve columns" id="addCommentForm">
+  @{Html.RenderPartial("AddCommentForm");}
+</div>
+@section Scripts
+{
+  @{Html.RenderPartial("AddCommentFormScript");}
+}

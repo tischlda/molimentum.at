@@ -1,0 +1,14 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    Response.StatusCode = ViewBag.StatusCode;
+}
+
+<section class="sixteen columns">
+    <div class="error entry">
+        <header><h1>Error: @ViewBag.Title</h1></header>
+        <section class="content">
+            <img src="@ViewBag.ImageUrl" />
+            @{RenderBody();}
+        </section>
+    </div>
+</section>

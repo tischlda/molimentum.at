@@ -1,0 +1,22 @@
+﻿@model Molimentum.Areas.Api.Models.Mails.Mail
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Receive</title>
+</head>
+<body>
+    @using(Html.BeginForm())
+    {
+        @Html.LabelFor(mail => mail.From)<text>:</text>
+        @Html.EditorFor(mail => mail.From)
+        <br />
+        @Html.LabelFor(mail => mail.Subject)<text>:</text>
+        @Html.EditorFor(mail => mail.Subject)
+        <br />
+        @Html.LabelFor(mail => mail.Plain)<br />
+        @Html.TextAreaFor(mail => mail.Plain, 40, 80, null)
+        <br />
+        <input type="submit" value="Submit" />
+    }
+</body>
+</html>

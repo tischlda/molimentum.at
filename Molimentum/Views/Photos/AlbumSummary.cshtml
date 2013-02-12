@@ -1,0 +1,35 @@
+﻿@using Molimentum
+@using Molimentum.Models
+@model Album
+<article class="albumSummary">
+    <header><h1>@Html.ActionLink(Model.Title, "Detail", "Photos", new { Model.Slug }, null)</h1></header>
+    <section class="content">
+    @{
+        var thumbnail = Model.ThumbnailLinks.Fit(440, 250);
+        if (thumbnail != null)
+        {
+            <a href="@Url.Action("Detail", "Photos", new { Model.Slug })">
+                <img class="albumImage" src="@thumbnail.Url" width="@thumbnail.Width" alt="@Model.Title" />
+            </a>
+        }
+    }
+    <p>@Model.Body.GenerateSummaryFromHtmlString(250)</p>
+    </section>
+    <footer>
+        @{var first = true;}
+
+        @if (Model.DateFrom != null && Model.DateTo != null)
+        {
+            if (first) { first = false; } else {<text> | </text>}
+            <text>@Model.DateFrom.Value.Date.ToShortDateString() - @Model.DateTo.Value.Date.ToShortDateString()</text>
+        }
+
+        @if (first) { first = false; } else {<text> | </text>}
+
+        @Model.Pictures.Count() Bilder
+
+        @if (first) { first = false; } else {<text> | </text>}
+
+        <a href="@Url.Action("Detail", "Photos", new { Model.Slug })#comments">Kommentare:</a> @Model.Comments.Count()
+    </footer>
+</article>

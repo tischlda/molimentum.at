@@ -1,0 +1,16 @@
+﻿<script type="text/javascript">
+    $(function () {
+        var map = new google.maps.Map($("#latestPositionMap").get(0), {
+            mapTypeId: google.maps.MapTypeId.SATELLITE,
+            mapTypeControl: true,
+            streetViewControl: false,
+            zoomControl: true
+        });
+
+        $.molimentum.loadPositions(map, {
+            page: 1,
+            maxPages: 1,
+            pageSize: 10
+        });
+    });
+</script>

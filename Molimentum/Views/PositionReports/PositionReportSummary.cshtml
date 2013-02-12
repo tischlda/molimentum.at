@@ -1,0 +1,30 @@
+﻿@using System.Globalization
+@using Molimentum
+@using Molimentum.Models
+
+@model IEnumerable<Molimentum.Models.PositionReport>
+
+@{
+    var latestPosition = Model.OrderByDescending(p => p.DateTime).First();
+}
+
+<article class="positionReportSummary">
+    <header><h1>@Html.ActionLink(latestPosition.Comment, "Index", "PositionReports")</h1></header>
+    <section class="content">
+        <div id="latestPositionMap" style="max-width: 100%; width: 440px; height: 250px; background-color: Black" class="mapdynamic"></div>
+        @(Html.GoogleStaticMap(440, 247, GoogleMapType.Hybrid, new { id = "latestPositionMapImage", @class = "mapstatic" } )
+            .AddMarker(new MapMarkerStyle { Icon = "http://chart.googleapis.com/chart?chst=d_simple_text_icon_below&chld=%7C12%7Cff0000%7Csail%7C24%7C005544" },
+                       from positionReport in Model.OrderByDescending(p => p.DateTime).Take(1)
+                       select new Location(positionReport.Position.Latitude, positionReport.Position.Longitude))
+            .AddPath(new MapPathStyle { Color = "red", Weight = 5 },
+                      from positionReport in Model
+                      select new Location(positionReport.Position.Latitude, positionReport.Position.Longitude)))
+        <p>@String.Format(GeoFormatProvider.Latitude, "{0}", latestPosition.Position.Latitude) @String.Format(GeoFormatProvider.Longitude, "{0}", latestPosition.Position.Longitude)</p>
+        
+    </section>
+    <footer>
+        @latestPosition.DateTime.DateTime
+    </footer>
+</article>
+
+@{Html.AddClientScript(Html.Partial("../PositionReports/PositionReportSummaryScripts"));}

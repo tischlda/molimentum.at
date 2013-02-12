@@ -1,0 +1,24 @@
+﻿@using Molimentum.Models
+@using Molimentum.ViewModels
+@model IEnumerable<CommentWithParent>
+<section class="entry">
+    <header class="entryHeader">Neuste Kommentare <span class="moreLink">@Html.ActionLink("[mehr »]", "Index", "Guestbook")</span></header>
+    @if (Model != null)
+    {
+    <section class="content latestComments">
+        <ul>
+        @foreach (var commentWithParent in Model)
+        {
+            string link;
+
+          link = commentWithParent.Parent != null ? Url.Detail(commentWithParent.Parent) : Url.Action("Index", "Guestbook");
+          <li><a href="@link#@commentWithParent.Comment.Id">@commentWithParent.Comment.DateTime.DateTime - @commentWithParent.Comment.Title (@commentWithParent.Comment.Author)</a></li>
+        }
+        </ul>
+    </section>
+    }
+    else
+    {
+    <p>Noch keine Kommentare.</p>
+    }
+</section>

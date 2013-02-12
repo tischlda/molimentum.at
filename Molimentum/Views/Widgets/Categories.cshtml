@@ -1,0 +1,13 @@
+﻿@using Molimentum.Models
+@model IEnumerable<Category>
+<section class="entry">
+    <header class="entryHeader">Kategorien</header>
+    <section class="content categories">
+        <ul>
+        @foreach (var category in Model)
+        {
+            <li>@Html.ActionLink(category.Title, "CategoryDetail", "Blog", new { Slug = category.Slug }, null)</li>
+        }
+        </ul>
+    </section>
+</section>

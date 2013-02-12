@@ -1,0 +1,35 @@
+﻿@using Molimentum
+@model Molimentum.Models.Comment
+<div class="entry">
+    <article class="comment">
+        <header><a id="@Model.Id"></a><h1>@Model.Title</h1></header>
+        <section class="content">
+            <div class="userInfo">
+                <a href="@Url.GravatarProfile(Model.Email)">
+                @Html.Gravatar(Model.Email, 80, GravatarHelper.DefaultImageIdenticon, GravatarRating.R, new { @class = "avatar" })
+                </a>
+                <p>@Model.Author
+                @if (!String.IsNullOrEmpty(Model.Website))
+                { 
+                    <a href="@Model.Website">[...]</a>
+                }
+                </p>
+            </div>
+            <p>@Html.Raw(@Html.Encode(Model.Body).Replace("\n\n", "<p>").Replace("\n", "<br>"))</p>
+        </section>
+        <footer class="entryFooter">
+        @{var first = true;}
+
+        @if (first) { first = false; } else {<text> | </text>}
+
+        @Model.DateTime.DateTime
+
+        @if (ViewBag.Footer != null)
+        { 
+            if (first) { first = false; } else {<text> | </text>}
+            @Html.Raw(ViewBag.Footer)
+        }
+
+        </footer>
+    </article>
+</div>

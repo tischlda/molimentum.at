@@ -1,0 +1,21 @@
+﻿@model Molimentum.Models.Pager
+@{ var action = (string)ViewContext.RouteData.Values["action"]; }
+<nav class="pager">
+<div class="pagerLeft">
+@if (Model.Page > 1)
+{
+    @Html.ActionLink("<<", action, new { page = 1 }, new { title = "Erste Seite"} )
+    @Html.ActionLink("<", action, new { page = Model.Page - 1 }, new { title = "Vorige Seite"} )
+}
+</div>
+<div class="pagerCounter">
+@Model.Page<text>&nbsp;/&nbsp;</text>@Model.Pages<text>&nbsp;</text>
+</div>
+<div class="pagerRight">
+@if (Model.Page < Model.Pages)
+{
+    @Html.ActionLink(">", action, new { page = Model.Page + 1 }, new { title = "Nächste Seite"} )
+    @Html.ActionLink(">>", action, new { page = Model.Pages }, new { title = "Letzte Seite"} )
+}
+</div>
+</nav>

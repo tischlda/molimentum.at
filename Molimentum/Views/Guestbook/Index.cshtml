@@ -1,0 +1,42 @@
+﻿@using Molimentum
+@using Molimentum.Models
+@using Molimentum.ViewModels
+@model PagedResult<CommentWithParent>
+
+@{
+    ViewBag.Title = "Gästebuch";
+    ViewBag.Section = "Guestbook";
+}
+
+<div class="sixteen columns">
+
+<header class="commentsHeader"><h1><a id="comments"></a>Kommentare [@Html.ActionLink("+", "AddComment", null, new { id = "addCommentLink" })]</h1></header>
+
+<div id="addCommentForm"></div>
+
+@foreach (var commentWithParent in Model.Items)
+{
+    if (commentWithParent.Parent is Post)
+    {
+        var post = (Post)commentWithParent.Parent;
+
+        ViewBag.Footer = "Kommentar zu: <a href=" + Url.Detail(post) + ">" + Html.Encode(post.Title) + "</a>";
+    }
+    else if (commentWithParent.Parent is Album)
+    {
+        var album = (Album)commentWithParent.Parent;
+
+        ViewBag.Footer = "Kommentar zu: <a href=" + Url.Detail(album) + ">" + Html.Encode(album.Title) + "</a>";
+    }
+    else
+    {
+        ViewBag.Footer = null;
+    }
+
+    Html.RenderPartial("Comment", commentWithParent.Comment);
+}
+
+@{Html.RenderPartial("Pager", Model.Pager);}
+</div>
+
+@{Html.AddClientScript(Html.Partial("../Guestbook/AddCommentScript"));}

@@ -1,0 +1,13 @@
+﻿@using Molimentum.Models
+@model IEnumerable<ClassifiedItem<TagCount>>
+<section class="entry">
+    <header class="entryHeader">Tags</header>
+    <section class="content tagCloud">
+        <ul class="tags">
+        @foreach (var classifiedTag in Model)
+        {
+            <li>@Html.ActionLink(classifiedTag.Item.Tag, "TagIndex", "Blog", new { Tag = classifiedTag.Item.Tag }, new { @class = "tag" + classifiedTag.Class })</li>
+        }
+        </ul>
+    </section>
+</section>

@@ -1,0 +1,31 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Picasa Import</title>
+
+    <script src="@System.Web.Optimization.BundleTable.Bundles.ResolveBundleUrl("~/Scripts/Head/js")"></script>
+</head>
+<body>
+    <div>
+        <a id="startImport" href="@Url.Action("Import")">Start Import</a><br />
+        <div id="importStatus"></div>
+    </div>
+    <script src="@System.Web.Optimization.BundleTable.Bundles.ResolveBundleUrl("~/Scripts/js")"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("#startImport").click(function (event) {
+                event.preventDefault();
+                $("#importStatus").text("Importing...");
+                $.get(this.href)
+                    .done(function () { $("#importStatus").text("Done."); })
+                    .fail(function (jqXHR) { $("#importStatus").text("Failed."); });
+            });
+        });
+    </script>
+</body>
+</html>

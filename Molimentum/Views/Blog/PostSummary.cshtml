@@ -1,0 +1,48 @@
+﻿@using Molimentum
+@using Molimentum.Models
+@model Post
+<article class="postSummary">
+    <header>
+        <h1>@Html.ActionLink(Model.Title, "Detail", "Blog", new { Model.Slug }, null)</h1>
+        @if (Model.DateFrom != null && Model.DateTo != null)
+        {
+            <div class="timespan"><text>@Model.DateFrom.Value.Date.ToShortDateString() - @Model.DateTo.Value.Date.ToShortDateString()</text></div>
+        }
+    </header>
+    <section class="content">
+        @Html.Raw(Model.Body.GenerateSummaryImageFromHtmlString())
+        <p>@Model.Body.GenerateSummaryFromHtmlString(500) [@Html.ActionLink("weiter »", "Detail", "Blog", new { Model.Slug }, null)]</p>
+    </section>
+    <footer>
+        @{var first = true;}
+
+        @if (Model.DateTime != null)
+        {
+            if (first) { first = false; } else {<text> | </text>}
+            <text>@Model.DateTime.DateTime</text>
+        }
+
+        @if(Model.Category != null)
+        {
+            if (first) { first = false; } else {<text> | </text>}
+            <text>Kategorie:</text>
+            @Html.ActionLink(Model.Category.Title, "CategoryDetail", "Blog", new { Slug = Model.Category.Slug }, null)
+        }
+    
+        @if (Model.Tags != null && Model.Tags.Any())
+        {
+            if (first) { first = false; } else {<text> | </text>}
+            <text>Tags:</text>
+            var firstTag = true;
+            foreach (var tag in Model.Tags)
+            {
+                if (firstTag) { firstTag = false; } else {<text>, </text>}
+                @Html.ActionLink(tag, "TagIndex", "Blog", new { Tag = tag }, null)
+            }
+        }
+    
+        @if (first) { first = false; } else {<text> | </text>}
+
+        <a href="@Url.Action("Detail", "Blog", new { Model.Slug })#comments">Kommentare:</a> @Model.Comments.Count()
+    </footer>
+</article>

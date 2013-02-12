@@ -1,0 +1,13 @@
+﻿@using Molimentum.Models
+@model IEnumerable<PositionReport>
+<div class="entry">
+    <header class="entryHeader">Aktuelle Position <span class="moreLink">@Html.ActionLink("[mehr »]", "Index", "PositionReports")</span></header>
+    @if (Model != null)
+    {
+        Html.RenderPartial("../PositionReports/PositionReportSummary", Model);
+    }
+    else
+    {
+    <p>Noch keine Position.</p>
+    }
+</div>
