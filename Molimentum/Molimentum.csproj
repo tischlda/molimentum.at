@@ -262,6 +262,7 @@
     <Compile Include="ViewModels\BlogDetailViewModel.cs" />
     <Compile Include="ViewModels\CommentWithParent.cs" />
     <Compile Include="ViewModels\TagIndexViewModel.cs" />
+    <Compile Include="ViewModels\TagCloudViewModel.cs" />
     <Compile Include="Areas\Api\Models\Mails\CommandMail.cs" />
     <Compile Include="Areas\Api\Models\Mails\CommandMailProcessor.cs" />
     <Compile Include="Areas\Api\Models\Mails\IProcessor.cs" />

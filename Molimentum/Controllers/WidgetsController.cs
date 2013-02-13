@@ -30,12 +30,15 @@ namespace Molimentum.Controllers
         {
             var tagClassifier = new Classifier(new ExponentialClassBuilder(6, 1.4));
 
-            var tags = _session.Query<TagCount, Post_Tags_Count>()
-                .OrderBy(item => item.Tag)
-                .ToList()
-                .AsCLassified(tagClassifier, tag => tag.Count);
+            var viewModel = new TagCloudViewModel
+            {
+                ClassifiedTags = _session.Query<TagCount, Post_Tags_Count>()
+                    .OrderBy(item => item.Tag)
+                    .ToList()
+                    .AsCLassified(tagClassifier, tag => tag.Count)
+            };
 
-            return PartialView(tags);
+            return PartialView(viewModel);
         }
 
         public ActionResult LatestPost()
