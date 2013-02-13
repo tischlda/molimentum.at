@@ -5,8 +5,8 @@ bin
 *.user
 Index.dat
 Storage.dat
-Web.config
-App.config
+Molimentum/Web.config
+Molimentum.Tests/App.config
 *.Debug.Config
 *.Release.Config
 packages/
